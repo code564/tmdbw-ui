@@ -1,46 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import './App.css';
 import SearchInput from './components/SearchInput/SearchInput';
 import MoviesList from './components/MoviesList/MoviesList';
-
-// This holds a list of some fiction people
-// Some  have the same name but different age and id
-const USERS = [
-  { id: 1, name: 'Andy', age: 32 },
-  { id: 2, name: 'Bob', age: 30 },
-  { id: 3, name: 'Tom Hulk', age: 40 },
-  { id: 4, name: 'Tom Hank', age: 50 },
-  { id: 5, name: 'Audra', age: 30 },
-  { id: 6, name: 'Anna', age: 68 },
-  { id: 7, name: 'Tom', age: 34 },
-  { id: 8, name: 'Tom Riddle', age: 28 },
-  { id: 9, name: 'Bolo', age: 23 },
-];
+import { fetchMovies, searchMovies } from './redux/actions';
 
 function App() {
-  // the value of the search field 
   const [name, setName] = useState('');
+  const dispatch = useDispatch()
+  const movies = useSelector((state) => state.movies);
 
-  // the search result
-  const [foundUsers, setFoundUsers] = useState(USERS);
+  useEffect(() => {
+    dispatch(fetchMovies())
+  },[])
 
   const filter = (e) => {
     const keyword = e.target.value;
-
-    if (keyword !== '') {
-      const results = USERS.filter((user) => {
-        return user.name.toLowerCase().startsWith(keyword.toLowerCase());
-        // Use the toLowerCase() method to make it case-insensitive
-      });
-      setFoundUsers(results);
-    } else {
-      setFoundUsers(USERS);
-      // If the text field is empty, show all users
-    }
-
     setName(keyword);
-  };
+    dispatch(searchMovies(keyword));
+  }
 
   return (
     <div className="container">
@@ -48,7 +28,7 @@ function App() {
         name={name}
         filter={filter}
       />
-      <MoviesList movies={foundUsers} />
+      <MoviesList movies={movies} />
     </div>
   );
 }
