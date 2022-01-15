@@ -5,21 +5,27 @@ import { useDispatch } from 'react-redux'
 import './App.css';
 import SearchInput from './components/SearchInput/SearchInput';
 import MoviesList from './components/MoviesList/MoviesList';
-import { fetchMovies, searchMovies } from './redux/actions';
+import { fetchMoviesThunk, searchMoviesThunk } from './redux/thunks';
+import { selectMoviesList, selectMoviesIsLoading, selectMoviesError } from './redux/selector';
 
 function App() {
   const [name, setName] = useState('');
   const dispatch = useDispatch()
-  const movies = useSelector((state) => state.movies);
+  const moviesList = useSelector(selectMoviesList);
+  const moviesIsLoading = useSelector(selectMoviesIsLoading);
+  const moviesError = useSelector(selectMoviesError);
 
   useEffect(() => {
-    dispatch(fetchMovies())
+    dispatch(fetchMoviesThunk())
   },[])
 
   const filter = (e) => {
     const keyword = e.target.value;
     setName(keyword);
-    dispatch(searchMovies(keyword));
+    if (keyword.length)
+      dispatch(searchMoviesThunk(keyword));
+    else
+      dispatch(fetchMoviesThunk())
   }
 
   return (
@@ -28,7 +34,7 @@ function App() {
         name={name}
         filter={filter}
       />
-      <MoviesList movies={movies} />
+      <MoviesList movies={moviesList} />
     </div>
   );
 }
