@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { QUERY_FETCH_POPULAR, QUERY_SEARCH_MOVIES } from '../graphql/graphql';
 import { makeGraphqlRequest } from '../graphql/proxy';
 import { actionTypes } from './actions';

@@ -5,11 +5,14 @@ import { useDispatch } from 'react-redux'
 import './App.css';
 import SearchInput from './components/SearchInput/SearchInput';
 import MoviesList from './components/MoviesList/MoviesList';
+import MoviesSnackbar from './components/MoviesSnackbar/MoviesSnackbar';
 import { fetchMoviesThunk, searchMoviesThunk } from './redux/thunks';
 import { selectMoviesList, selectMoviesIsLoading, selectMoviesError } from './redux/selector';
+import Container from '@mui/material/Container';
 
 function App() {
-  const [name, setName] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [snackbarReady, setSnackbarReady] = useState(true);
   const dispatch = useDispatch()
   const moviesList = useSelector(selectMoviesList);
   const moviesIsLoading = useSelector(selectMoviesIsLoading);
@@ -17,25 +20,66 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchMoviesThunk())
-  },[])
+  },[dispatch])
 
-  const filter = (e) => {
-    const keyword = e.target.value;
-    setName(keyword);
-    if (keyword.length)
-      dispatch(searchMoviesThunk(keyword));
+  const searchMovies = () => {
+    if (searchKeyword.length)
+      dispatch(searchMoviesThunk(searchKeyword));
     else
       dispatch(fetchMoviesThunk())
+    setSnackbarReady(true);
   }
 
-  return (
+  const handleSearchInputChange = (e) => {
+    const keyword = e.target.value;
+    setSearchKeyword(keyword);
+  }
+
+  const handleSnackbarClose = () => {
+    setSnackbarReady(false);
+  }
+
+  /* return (
     <div className="container">
       <SearchInput
-        name={name}
-        filter={filter}
+        searchKeyword={searchKeyword}
+        onChange={handleSearchInputChange}
+        searchAction={searchMovies}
       />
-      <MoviesList movies={moviesList} />
+      <MoviesList
+        isLoading={moviesIsLoading}
+        moviesError={moviesError}
+        movies={moviesList}
+      />
+      {moviesError && (
+        <MoviesSnackbar
+          open={snackbarReady}
+          onClose={handleSnackbarClose}
+          message={moviesError}
+        />
+      )}
     </div>
+  ); */
+  return (
+    <Container maxWidth="lg">
+      <SearchInput
+        searchKeyword={searchKeyword}
+        onChange={handleSearchInputChange}
+        searchAction={searchMovies}
+      />
+      <MoviesList
+        isLoading={moviesIsLoading}
+        moviesError={moviesError}
+        movies={moviesList}
+      />
+      {moviesError && (
+        <MoviesSnackbar
+          open={snackbarReady}
+          onClose={handleSnackbarClose}
+          message={moviesError}
+        />
+      )}
+    </Container>
   );
 }
 

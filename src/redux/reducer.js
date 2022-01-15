@@ -1,14 +1,20 @@
 import { combineReducers } from 'redux';
 import { actionTypes } from './actions';
 
-const moviesReducer = (state = { movies: [], isLoading: false, error: null }, action) => {
+const moviesState = {
+    movies: [],
+    isLoading: false,
+    error: null
+};
+
+const moviesReducer = (state = moviesState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_MOVIES:
-            return { ...state, isLoading: true }
+            return { ...moviesState, isLoading: true }
         case actionTypes.FETCH_MOVIES_SUCCESS:
-            return { ...state, movies: action.payload };
+            return { ...moviesState, movies: action.payload };
         case actionTypes.FETCH_MOVIES_FAILED:
-            return { ...state, error: action.payload };
+            return { ...moviesState, error: action.payload };
         default: return state
     }
 }
