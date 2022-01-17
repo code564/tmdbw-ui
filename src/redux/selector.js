@@ -16,3 +16,8 @@ export const selectMoviesError = createSelector(
     selectMovies,
     movies => movies && movies.error
 );
+
+export const selectFetchingAction = createSelector(
+    selectMovies,
+    movies => movies && movies.fetchingAction
+);

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import './App.css';
 import SearchInput from './components/SearchInput/SearchInput';
@@ -39,27 +38,6 @@ function App() {
     setSnackbarReady(false);
   }
 
-  /* return (
-    <div className="container">
-      <SearchInput
-        searchKeyword={searchKeyword}
-        onChange={handleSearchInputChange}
-        searchAction={searchMovies}
-      />
-      <MoviesList
-        isLoading={moviesIsLoading}
-        moviesError={moviesError}
-        movies={moviesList}
-      />
-      {moviesError && (
-        <MoviesSnackbar
-          open={snackbarReady}
-          onClose={handleSnackbarClose}
-          message={moviesError}
-        />
-      )}
-    </div>
-  ); */
   return (
     <Container maxWidth="lg">
       <SearchInput

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { actionTypes } from './actions';
 
 const moviesState = {
+    fetchingAction: "Most popular movies",
     movies: [],
     isLoading: false,
     error: null
@@ -9,12 +10,14 @@ const moviesState = {
 
 const moviesReducer = (state = moviesState, action) => {
     switch (action.type) {
+        case actionTypes.FETCH_MODE_CHANGED:
+            return { ...state, fetchingAction: action.payload }
         case actionTypes.FETCH_MOVIES:
-            return { ...moviesState, isLoading: true }
+            return { ...state, isLoading: true, error: null }
         case actionTypes.FETCH_MOVIES_SUCCESS:
-            return { ...moviesState, movies: action.payload };
+            return { ...state, movies: action.payload, error: null, isLoading: false };
         case actionTypes.FETCH_MOVIES_FAILED:
-            return { ...moviesState, error: action.payload };
+            return { ...state, error: action.payload, isLoading: false };
         default: return state
     }
 }

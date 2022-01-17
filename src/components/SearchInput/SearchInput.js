@@ -1,6 +1,10 @@
 import './SearchInput.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import SearchIcon from '@mui/icons-material/Search';
 
 const handleEnter = (event, searchAction) => {
   if (event.key === 'Enter') {
@@ -9,24 +13,32 @@ const handleEnter = (event, searchAction) => {
 }
 
 const SearchInput = (props) => {
-    return ([
-      <TextField
-        id="outlined-basic"
-        key="movie-search-input"
-        label="Movie Title"
-        variant="outlined"
-        onChange={props.onChange}
-        onKeyDown={(evt) => handleEnter(evt, props.searchAction)}
-        value={props.searchKeyword}
-      />,
-      <Button
-        key="movie-search-button"
-        variant="contained"
-        onClick={props.searchAction}
-      >
-        Search
-      </Button>
-    ]);
+  return (
+    <Grid container padding="25px" spacing={2}>
+      <Grid item xs={10}>
+        <TextField
+          id="outlined-basic"
+          key="movie-search-input"
+          label="Movie Title"
+          variant="outlined"
+          size="small"
+          onChange={props.onChange}
+          onKeyDown={(evt) => handleEnter(evt, props.searchAction)}
+          value={props.searchKeyword}
+          fullWidth
+        />
+      </Grid>
+      <Grid item xs={2}>
+        <Button
+          key="movie-search-button"
+          variant="contained"
+          startIcon={<SearchIcon />}
+          onClick={props.searchAction}
+          fullWidth
+        >Search</Button>
+      </Grid>
+    </Grid>
+  )
 }
 
 export default SearchInput;
