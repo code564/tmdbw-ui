@@ -1,0 +1,7 @@
+.movie-name {
+    font-weight: 600;   
+}
+
+.movie-name:hover {
+    cursor: pointer;
+}

@@ -4,22 +4,12 @@ query fetchPopular {
       id
       name
       overview
-      releaseDate
       genres {
         name
       }
       score
       img: poster {
         url: custom(size: "w185_and_h278_bestv2")
-      }
-      reviews {
-        id
-        author
-        content
-        language {
-          code
-          name
-        }
       }
     }
   }
@@ -31,7 +21,6 @@ query SearchMovies {
       id
       name
       overview
-      releaseDate
       genres {
         name
       }
@@ -39,17 +28,27 @@ query SearchMovies {
       img: poster {
         url: custom(size: "w185_and_h278_bestv2")
       }
-      cast {
+    }
+  }
+`
+
+export const QUERY_GET_SIMILAR_MOVIES = (id) => `
+query getMovie {
+  movie(id: ${id}) {
+    similar {
+      ... on Movie {
         id
-        person {
+        name
+        overview
+        genres {
           name
         }
-        role {
-          ... on Cast {
-            character
-          }
+        score
+        img: poster {
+          url: custom(size: "w185_and_h278_bestv2")
         }
       }
     }
   }
+}
 `
