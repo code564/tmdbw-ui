@@ -10,55 +10,55 @@ import { selectMoviesList, selectMoviesIsLoading, selectMoviesError } from './re
 import Container from '@mui/material/Container';
 
 function App() {
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [snackbarReady, setSnackbarReady] = useState(true);
-  const dispatch = useDispatch()
-  const moviesList = useSelector(selectMoviesList);
-  const moviesIsLoading = useSelector(selectMoviesIsLoading);
-  const moviesError = useSelector(selectMoviesError);
+	const [searchKeyword, setSearchKeyword] = useState('');
+	const [snackbarReady, setSnackbarReady] = useState(true);
+	const dispatch = useDispatch()
+	const moviesList = useSelector(selectMoviesList);
+	const moviesIsLoading = useSelector(selectMoviesIsLoading);
+	const moviesError = useSelector(selectMoviesError);
 
-  useEffect(() => {
-    dispatch(fetchMoviesThunk())
-  },[dispatch])
+	useEffect(() => {
+		dispatch(fetchMoviesThunk())
+	}, [dispatch])
 
-  const searchMovies = () => {
-    if (searchKeyword.length)
-      dispatch(searchMoviesThunk(searchKeyword));
-    else
-      dispatch(fetchMoviesThunk())
-    setSnackbarReady(true);
-  }
+	const searchMovies = () => {
+		if (searchKeyword.length)
+			dispatch(searchMoviesThunk(searchKeyword));
+		else
+			dispatch(fetchMoviesThunk())
+		setSnackbarReady(true);
+	}
 
-  const handleSearchInputChange = (e) => {
-    const keyword = e.target.value;
-    setSearchKeyword(keyword);
-  }
+	const handleSearchInputChange = (e) => {
+		const keyword = e.target.value;
+		setSearchKeyword(keyword);
+	}
 
-  const handleSnackbarClose = () => {
-    setSnackbarReady(false);
-  }
+	const handleSnackbarClose = () => {
+		setSnackbarReady(false);
+	}
 
-  return (
-    <Container maxWidth="lg">
-      <SearchInput
-        searchKeyword={searchKeyword}
-        onChange={handleSearchInputChange}
-        searchAction={searchMovies}
-      />
-      <MoviesList
-        isLoading={moviesIsLoading}
-        moviesError={moviesError}
-        movies={moviesList}
-      />
-      {moviesError && (
-        <MoviesSnackbar
-          open={snackbarReady}
-          onClose={handleSnackbarClose}
-          message={moviesError}
-        />
-      )}
-    </Container>
-  );
+	return (
+		<Container maxWidth="lg">
+			<SearchInput
+				searchKeyword={searchKeyword}
+				onChange={handleSearchInputChange}
+				searchAction={searchMovies}
+			/>
+			<MoviesList
+				isLoading={moviesIsLoading}
+				moviesError={moviesError}
+				movies={moviesList}
+			/>
+			{moviesError && (
+				<MoviesSnackbar
+					open={snackbarReady}
+					onClose={handleSnackbarClose}
+					message={moviesError}
+				/>
+			)}
+		</Container>
+	);
 }
 
 export default App;

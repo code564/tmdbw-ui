@@ -22,8 +22,29 @@ const moviesReducer = (state = moviesState, action) => {
     }
 }
 
+const wikipediaExtractState = {
+    movieExtract: null,
+    name: "",
+    isLoading: false,
+    error: null
+};
+
+const wikipediaExtractReducer = (state = wikipediaExtractState, action) => {
+    switch (action.type) {
+        case actionTypes.FETCH_WIKIPEDIA_EXTRACT:
+            return { ...state, isLoading: true, error: null }
+        case actionTypes.FETCH_WIKIPEDIA_EXTRACT_SUCCESS:
+            return { ...state, movieExtract: action.payload.movieExtract, name: action.payload.name, error: null, isLoading: false };
+        case actionTypes.FETCH_WIKIPEDIA_EXTRACT_FAILED:
+            return { ...state, error: action.payload, isLoading: false };
+        default: return state
+    }
+}
+
+
 const rootReducer = combineReducers({
-    movies: moviesReducer
+    movies: moviesReducer,
+    wikipediaExtract: wikipediaExtractReducer
 });
 
 export default rootReducer;
