@@ -62,7 +62,7 @@ const MoviesList = (props) => {
                 handleClose={onMovieExtractModalClose}
                 name={wikipediaExtractName}
                 content={wikipediaExtractContent}
-                isLoading={wikipediaExtractIsLoading}
+                isContentLoading={wikipediaExtractIsLoading}
             />}
         </Fragment>
     )

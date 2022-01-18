@@ -8,12 +8,11 @@ const MovieExtractModal = (props) => {
         <Modal
             open={props.open}
             onClose={props.handleClose}
-            isLoading={props.isLoading}
         >
             <Fragment>
-                {props.isLoading && <CircularProgress />}
+                {props.isContentLoading && <CircularProgress />}
                 {!props.content && <ExtractContent name={props.name} content={"Sorry, there is no short description available from Wikipedia"} />}
-                {!props.isLoading && props.content && <ExtractContent name={props.name} content={props.content} />}
+                {!props.isContentLoading && props.content && <ExtractContent name={props.name} content={props.content} />}
             </Fragment>
         </Modal>
     )

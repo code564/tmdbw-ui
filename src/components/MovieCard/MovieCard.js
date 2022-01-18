@@ -17,7 +17,7 @@ const MovieInfo = (props) => {
 		<Card sx={{ width: 270 }} >
 			<CardMedia
 				component="img"
-				image={props.movie.img.url}
+				image={(props.movie.img && props.movie.img.url) || null}
 				alt={props.movie.name}
 			/>
 			<CardContent>
