@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-
-import './App.css';
 import SearchInput from './components/SearchInput/SearchInput';
 import MoviesList from './components/MoviesList/MoviesList';
 import MoviesSnackbar from './components/MoviesSnackbar/MoviesSnackbar';
